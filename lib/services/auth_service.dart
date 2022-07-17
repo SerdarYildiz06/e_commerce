@@ -3,6 +3,7 @@ import 'package:e_commerce/utils/constants/api_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../models/auth/login_response.dart';
+import 'hive_service/secure_storage_service.dart';
 
 class AuthService {
   Dio dio = Dio();
@@ -12,6 +13,8 @@ class AuthService {
   }
   Future<LoginResponse?> login(
       {required String userName, required String password}) async {
+    final String? token = await SecureStorageService().get('token');
+
     debugPrint('USERNAME' + userName);
     debugPrint('Password' + password);
 
