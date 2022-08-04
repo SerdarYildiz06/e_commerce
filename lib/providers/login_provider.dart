@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/auth/login_response.dart';
-import '../screens/home/home_screen.dart';
-import '../screens/onboarding/onboarding_screen.dart';
+import '../screens/bottomNavBar/bottom_nav_bar.dart';
 import '../services/auth_service.dart';
 import '../services/hive_service/secure_storage_service.dart';
 import '../utils/helpers/my_snackbar.dart';
@@ -10,12 +9,16 @@ import '../utils/helpers/my_snackbar.dart';
 class LoginProvider extends ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  LoginResponse? loginResponse;
   bool obscurePassword = true;
   final formKey = GlobalKey<FormState>();
   bool onboardingShown = false;
+  bool loading = false;
   String? userName;
-  String? profilPage;
+  String? firstName;
+  String? lastName;
+  String? profilePhoto;
+
   void setUserName(String? value) {
     userName = value;
   }
@@ -23,13 +26,6 @@ class LoginProvider extends ChangeNotifier {
   void toggleObscurePassword() {
     obscurePassword = !obscurePassword;
     notifyListeners();
-  }
-
-  Future<void> checkOnboardingStatus() async {
-    String? _onboardingShown = await SecureStorageService().get('onboardingShown');
-    onboardingShown =
-        _onboardingShown == 'false' || _onboardingShown == null ? false : true;
-    print('onboardingShown : $onboardingShown');
   }
 
   Future<void> login(context) async {
@@ -45,26 +41,25 @@ class LoginProvider extends ChangeNotifier {
       MySnackbar.show(context, message: 'Please enter your password');
       return;
     }
-    LoginResponse? loginResponse = await AuthService()
+    loginResponse = await AuthService()
         .login(userName: usernameController.text, password: passwordController.text);
+
     if (loginResponse != null) {
-      profilPage = loginResponse.image;
+      userName = loginResponse?.username.toString();
+      firstName = loginResponse!.firstName.toString();
+      lastName = loginResponse!.lastName.toString();
+      profilePhoto = loginResponse!.image.toString();
+
       await SecureStorageService().set('loggedIn', 'true');
-      print('loginResponse.token : ${loginResponse.token}');
-      await SecureStorageService().set('token', loginResponse.token);
-      print(loginResponse.toMap());
-      await checkOnboardingStatus();
-      if (!onboardingShown) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-            (route) => false);
-      } else {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-            (route) => false);
-      }
+      print('loginResponse.token : ${loginResponse!.token}');
+      await SecureStorageService().set('token', loginResponse!.token);
+
+      print(loginResponse!.toMap());
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const BottomNavBar()),
+          (route) => false);
     }
   }
 }

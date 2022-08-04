@@ -1,4 +1,4 @@
-import 'package:e_commerce/screens/login/login_screen.dart';
+import 'package:e_commerce/screens/splash_screen.dart';
 import 'package:e_commerce/utils/helpers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const LoginScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/splash_provider.dart';
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    SplashProvider splashProvider = Provider.of<SplashProvider>(context);
+    splashProvider.init(context);
+
+    return Scaffold(
+      body: Container(
+        height: size.height,
+        width: size.width,
+        decoration: const BoxDecoration(),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(500),
+                child: Image.asset(
+                  'lib/assets/logo.png',
+                  height: 150,
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+}

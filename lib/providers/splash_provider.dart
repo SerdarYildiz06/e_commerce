@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../screens/home/home_screen.dart';
+import '../screens/bottomNavBar/bottom_nav_bar.dart';
 import '../screens/login/login_screen.dart';
 import '../services/hive_service/secure_storage_service.dart';
 
@@ -40,8 +40,10 @@ class SplashProvider extends ChangeNotifier {
             (route) => false);
         return;
       }
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const BottomNavBar()),
+          (route) => false);
     }
   }
 }
