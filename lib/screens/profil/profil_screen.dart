@@ -17,8 +17,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   @override
   void initState() {
     super.initState();
-    final products = Provider.of<LoginProvider>(context, listen: false);
-    //products.getProductsOfCategory(category: Category.laptops.name);
+    final userInfo = Provider.of<LoginProvider>(context, listen: false);
   }
 
   @override
@@ -30,9 +29,9 @@ class _ProfilScreenState extends State<ProfilScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(context.watch<LoginProvider>().userName.toString()),
-            Text(context.watch<LoginProvider>().firstName.toString()),
-            Text(context.watch<LoginProvider>().lastName.toString()),
+            Text(loginProvider.userName.toString()),
+            Text(loginProvider.firstName.toString()),
+            Text(loginProvider.lastName.toString()),
             const SizedBox(height: 50),
             SizedBox(
                 height: 200,
@@ -53,15 +52,15 @@ class _ProfilScreenState extends State<ProfilScreen> {
               child: LottieBuilder.network(
                   'https://assets9.lottiefiles.com/private_files/lf30_zlku8evq.json'),
             ),
-            TextButton(
-              onPressed: () async {
-                await SecureStorageService().clear();
-
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => const LoginScreen())));
-              },
-              child: const Text('Logout'),
-            ),
+            ListTile(
+                leading: const Text('Logout'),
+                trailing: GestureDetector(
+                    onTap: () async {
+                      await SecureStorageService().clear();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: ((context) => const LoginScreen())));
+                    },
+                    child: const Icon(Icons.exit_to_app))),
           ],
         ),
       ),

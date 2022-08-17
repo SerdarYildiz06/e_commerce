@@ -3,7 +3,7 @@ import 'package:e_commerce/screens/home/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/product/products_of_a_category.dart';
+import '../../models/product_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
