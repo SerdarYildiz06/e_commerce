@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/auth/login_response.dart';
@@ -41,9 +42,9 @@ class LoginProvider extends ChangeNotifier {
       MySnackbar.show(context, message: 'Please enter your password');
       return;
     }
-    loginResponse = await AuthService()
-        .login(userName: usernameController.text, password: passwordController.text);
-
+    loginResponse = await AuthService().login(
+        userName: usernameController.text, password: passwordController.text);
+    print(loginResponse);
     if (loginResponse != null) {
       userName = loginResponse?.username.toString();
       firstName = loginResponse!.firstName.toString();
@@ -59,6 +60,11 @@ class LoginProvider extends ChangeNotifier {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const BottomNavBar()),
+          (route) => false);
+    } else {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
           (route) => false);
     }
   }

@@ -23,7 +23,8 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
           return Scaffold(
             body: Column(
               children: [
-                Selector<ProductsProvider, bool>(builder: (context, value, child) {
+                Selector<ProductsProvider, bool>(
+                    builder: (context, value, child) {
                   return value ? const Placeholder() : const Text('data');
                 }, selector: (context, provider) {
                   return provider.loading;

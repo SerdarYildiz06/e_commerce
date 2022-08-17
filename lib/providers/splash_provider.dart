@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../screens/bottomNavBar/bottom_nav_bar.dart';
 import '../screens/login/login_screen.dart';
 import '../services/hive_service/secure_storage_service.dart';
@@ -8,7 +7,6 @@ import '../services/hive_service/secure_storage_service.dart';
 class SplashProvider extends ChangeNotifier {
   bool navigated = false;
   Duration duration = const Duration(seconds: 1);
-
   bool loggedIn = false;
   bool navigatedToShare = false;
 

@@ -1,3 +1,4 @@
+import 'package:e_commerce/providers/login_provider.dart';
 import 'package:e_commerce/providers/products_provider.dart';
 import 'package:e_commerce/screens/home/product_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -30,108 +31,119 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context, listen: true);
-
+    LoginProvider loginProvider =
+        Provider.of<LoginProvider>(context, listen: true);
+    print(loginProvider.lastName);
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: productsProvider.loading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
-                ),
-              )
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(18),
-                      child: Image.asset(
-                        'lib/assets/banner.jpg',
-                      )),
-                  const SizedBox(
-                    height: 20,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: productsProvider.loading || loginProvider.loginResponse != null
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
                   ),
-                  const Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Önce Çıkan Telefonlar',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(18),
+                        child: Image.asset(
+                          'lib/assets/banner.jpg',
+                        )),
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 125,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: productsProvider.phone!.products!.length,
-                      itemBuilder: (context, index) {
-                        Products products = productsProvider.phone!.products![index];
-                        return Card(
-                          child: Column(children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProductDetailScreen(
-                                              id: productsProvider
-                                                  .phone!.products![index],
-                                            )));
-                              },
-                              child: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child:
-                                      Image.network(products.images!.first.toString())),
-                            ),
-                          ]),
-                        );
-                      },
-                    ),
-                  ),
-                  const Align(
+                    const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Pre-release computers',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      )),
-                  SizedBox(
-                    height: 125,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: productsProvider.productsOfaCategory!.products!.length,
-                      itemBuilder: (context, index) {
-                        Products products =
-                            productsProvider.productsOfaCategory!.products![index];
-                        return SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Card(
+                        'Önce Çıkan Telefonlar',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 125,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productsProvider.phone!.products!.length,
+                        itemBuilder: (context, index) {
+                          Products products =
+                              productsProvider.phone!.products![index];
+                          return Card(
                             child: Column(children: [
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ProductDetailScreen(
-                                                id: productsProvider.productsOfaCategory!
-                                                    .products![index],
+                                          builder: (context) =>
+                                              ProductDetailScreen(
+                                                id: productsProvider
+                                                    .phone!.products![index],
                                               )));
                                 },
                                 child: SizedBox(
                                     height: 100,
                                     width: 100,
-                                    child:
-                                        Image.network(products.images!.first.toString())),
+                                    child: Image.network(
+                                        products.images!.first.toString())),
                               ),
                             ]),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                    const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Pre-release computers',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )),
+                    SizedBox(
+                      height: 125,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: productsProvider
+                            .productsOfaCategory!.products!.length,
+                        itemBuilder: (context, index) {
+                          Products products = productsProvider
+                              .productsOfaCategory!.products![index];
+                          return SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Card(
+                              child: Column(children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetailScreen(
+                                                  id: productsProvider
+                                                      .productsOfaCategory!
+                                                      .products![index],
+                                                )));
+                                  },
+                                  child: SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: Image.network(
+                                          products.images!.first.toString())),
+                                ),
+                              ]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }
