@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/product/products_of_a_category.dart';
+import '../../models/product_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Products id;
@@ -18,7 +18,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final int _current = 0;
   final CarouselController _controller = CarouselController();
   bool loading = false;
-  ProductOfCategory? _productOfCategory;
+  SingleProduct? _productOfCategory;
   late final List<String>? items = widget.id.images;
 
   @override

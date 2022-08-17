@@ -1,12 +1,12 @@
-class ProductOfCategory {
+class SingleProduct {
   List<Products>? products;
   int? total;
   int? skip;
   int? limit;
 
-  ProductOfCategory({this.products, this.total, this.skip, this.limit});
+  SingleProduct({this.products, this.total, this.skip, this.limit});
 
-  ProductOfCategory.fromJson(Map<String, dynamic> json) {
+  SingleProduct.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
       products = <Products>[];
       json['products'].forEach((v) {
